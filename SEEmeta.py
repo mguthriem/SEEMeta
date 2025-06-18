@@ -138,6 +138,8 @@ def SEEMetaSaver(dict,filePath):
     with open("PE001.json", "w") as f:
         json.dump(dict, f, indent=4)
 
+    print(f"successfully wrote: {filePath}")
+
 def toString(data,compact=True):
     #converts data loaded from file as a dictionary to a string that can be added as a value to a pv
     #optionally can make a compact version with no indentation or whitespace

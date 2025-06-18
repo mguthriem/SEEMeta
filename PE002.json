@@ -1,11 +1,11 @@
 {
     "type": "paris-edinburgh",
-    "model": "VX5",
+    "model": "VX3",
     "material": "819AW",
     "anvils": [
         {
             "type": "polycrystalline",
-            "material": "ZTA",
+            "material": "hBN",
             "culetGeometry": "single toroid",
             "culetDiameter": 10.0,
             "cadFile": "",
@@ -15,7 +15,7 @@
         },
         {
             "type": "polycrystalline",
-            "material": "ZTA",
+            "material": "hBN",
             "culetGeometry": "single toroid",
             "culetDiameter": 10.0,
             "cadFile": "",
@@ -31,8 +31,8 @@
         1,
         0
     ],
-    "temperatureControl": "CCR-1",
+    "temperatureControl": "none",
     "cadFile": "",
     "manufacturer": "",
-    "comment": "low temperature PE cell"
+    "comment": "standard mail in set-up"
 }
