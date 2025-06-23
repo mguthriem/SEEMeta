@@ -1,0 +1,12 @@
+{
+  "type": "polycrystalline",
+  "material": "CBN",
+  "culetGeometry": "single toroid",
+  "culetDiameter": 15.55,
+  "model": "standard",
+  "cadFile": "anvil_single_toroid_standard_CBN.cad",
+  "manufacturer": "",
+  "stringDescriptor": "anvil_single_toroid_standard_CBN",
+  "comment": "",
+  "UB": []
+}

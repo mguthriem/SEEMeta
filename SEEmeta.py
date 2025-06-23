@@ -5,7 +5,7 @@ import os
 class anvil:
     #class to define a generic anvil
 
-    def __init__(self,type,material,culetGeometry,culetDiameter):
+    def __init__(self,type,material,culetGeometry,culetDiameter,model):
 
         self.type = type
         self.material = material
@@ -14,16 +14,22 @@ class anvil:
         self.validate()
 
         #optional extra info
-        self.cadFile = ""
+        self.model = model
+        
         self.manufacturer = ""
         self.comment = ""
         self.UB = [] #aspirational, but could be included...
 
+        self.stringDescriptor = self.buildStringDescriptor()
+        self.cadFile = f"{self.stringDescriptor}.cad"
+
     def validate(self):
 
         assert self.type in ["polycrystalline", "single-crystal"]
-        assert self.material in ["ZTA","WC","diamond","CBN","versimax"]
+        assert self.material in ["ZTA","WC","diamond","CBN","sintered diamond"]
         assert self.culetGeometry in ["single toroid", "double toroid", "flat"]
+        assert type(self.culetDiameter) is float
+
 
     def to_dict(self):
         return {
@@ -31,12 +37,25 @@ class anvil:
             "material": self.material,
             "culetGeometry": self.culetGeometry,
             "culetDiameter": self.culetDiameter,
+            "model": self.model,
             "cadFile": self.cadFile,
             "manufacturer": self.manufacturer,
+            "stringDescriptor": self.stringDescriptor,
             "comment": self.comment,
             "UB": self.UB
         }
     
+    def buildStringDescriptor(self):
+
+        # create a short string to represent instance
+
+        if self.type == "single-crystal":
+            stringDescriptor = f"anvil_SXL_{self.material}_culet_{self.culetDiameter}"
+        elif self.type == "polycrystalline":
+            stringDescriptor = f"anvil_{self.culetGeometry}_{self.model}_{self.material}"
+
+        return stringDescriptor.replace(" ","_")
+
     @classmethod
     def from_dict(cls, data):
         #instantiate class from data dictionary
@@ -45,9 +64,10 @@ class anvil:
             type=data["type"],
             material=data["material"],
             culetGeometry=data["culetGeometry"],
-            culetDiameter=data["culetDiameter"]
+            culetDiameter=data["culetDiameter"],
+            model=data["model"]
         )
-        obj.cadFile = data.get("cadFile", "")
+        obj.cadFile = data.get("cadFile", "") 
         obj.manufacturer = data.get("manufacturer", "")
         obj.comment = data.get("comment", "")
         obj.UB = data.get("UB", [])
@@ -66,9 +86,11 @@ class opposedAnvilCell:
         self.gasketType = gasketType
         self.loadAxis = loadAxis
 
+        self.stringDescriptor = self.buildStringDescriptor()
+        self.cadFile = f"{self.stringDescriptor}.cad"
+
         # optional info
         self.temperatureControl = None
-        self.cadFile = ""
         self.manufacturer = ""
         self.comment = ""
 
@@ -80,16 +102,23 @@ class opposedAnvilCell:
         if self.type == ["paris-edinburgh"]:
             assert self.model in ["VX1","VX3","VX5"]
         elif self.type == ["DAC"]:
-            assert self.model in ["SNAP-DAC"]
+            assert self.model in ["LEGACY","MARK-VI","MARK-VII"]
 
         # assert self.material in [""] # not sure what these are
         if self.temperatureControl is not None:
-            assert self.temperatureControl in ["CCR-1","CCR-2","Furnace"] #I made these up
-
+            assert self.temperatureControl in ["CCR-14",
+                                               "CCR-21",
+                                               "CCR-25",
+                                               "CRYO-04",
+                                               "PE-CRYO",
+                                               "None"] 
         assert len(self.anvils) == 2 #make sure there are two anvils!
-
-        assert self.gasketMaterial in ["TiZr","Re","W"]
-        assert self.gasketType in ["encapsulating","flat"]
+        assert self.gasketMaterial in ["TiZr","Re","W", "Zr", 
+                                       "SS301", 
+                                       "pyrophyllite","Al",
+                                       "CuBe"]
+        print(f"gasket type is {self.gasketType}")
+        assert self.gasketType in ["encapsulating","non_encapsulating","flat","other"]
 
     def to_dict(self):
         return {
@@ -102,6 +131,7 @@ class opposedAnvilCell:
             "loadAxis": self.loadAxis,
             "temperatureControl": self.temperatureControl,
             "cadFile": self.cadFile,
+            "stringDescriptor": self.stringDescriptor,
             "manufacturer": self.manufacturer,
             "comment": self.comment
         }
@@ -123,6 +153,39 @@ class opposedAnvilCell:
         obj.manufacturer = data.get("manufacturer", "")
         obj.comment = data.get("comment", "")
         return obj
+    
+    def buildStringDescriptor(self):
+
+        # create a short string to represent instance
+        anvil = self.anvils[0] # this assumes anvils are the same
+
+        if self.type == "paris-edinburgh":
+
+            stringDescriptor = f"PE_{self.model}_{anvil.material}_{anvil.culetGeometry}"
+        elif self.type == "DAC":
+            stringDescriptor = f"DAC_{self.model}_{anvil.culetDiameter}mm_culet_{self.gasketMaterial}_gasket"
+        else:
+            raise ValueError(f"Unsupported type: {self.type}")
+
+        return stringDescriptor.replace(" ","_")
+
+    
+    def makeFileName(self):
+        # a standardised way to create a file name for the output json. The filename should
+        # intelligibly describe the SEE, so should be build from it's core attributes. For
+        # the save of brevity, these will be abbreviated.
+
+        if self.type == "paris-edinburgh":
+            abbrvType = "PE"
+        else:
+            abbrvType = self.type
+
+        self.anvils[0].type
+        
+        self.filename = f"{abbrvType}_{self.anvils[0].culetGeometry}_{self.anvils[0].material}.json".replace(' ','_')
+        
+        print(self.filename)
+
 
 def SEEMetaLoader(filePath):
     #Loads SEEMeta json file as a dictionary
@@ -135,7 +198,7 @@ def SEEMetaLoader(filePath):
 def SEEMetaSaver(dict,filePath):
     #save SEEMeta dictionary to file.
 
-    with open("PE001.json", "w") as f:
+    with open(filePath, "w") as f:
         json.dump(dict, f, indent=4)
 
     print(f"successfully wrote: {filePath}")
