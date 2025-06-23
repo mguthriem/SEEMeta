@@ -1,0 +1,14 @@
+name: dataenv
+channels:
+- conda-forge
+dependencies:
+- jupyter
+- matplotlib
+- notebook
+- numpy
+- pandas
+- panel
+- pygments
+- python
+- watchfiles
+
