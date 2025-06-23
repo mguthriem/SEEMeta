@@ -24,6 +24,8 @@ class anvil:
         assert self.type in ["polycrystalline", "single-crystal"]
         assert self.material in ["ZTA","WC","diamond","CBN","versimax"]
         assert self.culetGeometry in ["single toroid", "double toroid", "flat"]
+        assert type(self.culetDiameter) is float
+
 
     def to_dict(self):
         return {
@@ -47,7 +49,7 @@ class anvil:
             culetGeometry=data["culetGeometry"],
             culetDiameter=data["culetDiameter"]
         )
-        obj.cadFile = data.get("cadFile", "")
+        obj.cadFile = data.get("cadFile", "") 
         obj.manufacturer = data.get("manufacturer", "")
         obj.comment = data.get("comment", "")
         obj.UB = data.get("UB", [])
@@ -123,6 +125,18 @@ class opposedAnvilCell:
         obj.manufacturer = data.get("manufacturer", "")
         obj.comment = data.get("comment", "")
         return obj
+    
+    def makeFileName(self):
+        # a standardised way to create a file name for the output json. The filename should
+        # intelligibly describe the SEE, so should be build from it's core attributes. For
+        # the save of brevity, these will be abbreviated.
+
+        if self.type == "paris-edinburgh":
+            abbrvType = "PE"
+        else:
+            abbrvType = self.type
+
+        self.filename()
 
 def SEEMetaLoader(filePath):
     #Loads SEEMeta json file as a dictionary
@@ -135,7 +149,7 @@ def SEEMetaLoader(filePath):
 def SEEMetaSaver(dict,filePath):
     #save SEEMeta dictionary to file.
 
-    with open("PE001.json", "w") as f:
+    with open(filePath, "w") as f:
         json.dump(dict, f, indent=4)
 
     print(f"successfully wrote: {filePath}")

@@ -5,7 +5,7 @@
     "anvils": [
         {
             "type": "polycrystalline",
-            "material": "hBN",
+            "material": "CBN",
             "culetGeometry": "single toroid",
             "culetDiameter": 10.0,
             "cadFile": "",
@@ -15,7 +15,7 @@
         },
         {
             "type": "polycrystalline",
-            "material": "hBN",
+            "material": "CBN",
             "culetGeometry": "single toroid",
             "culetDiameter": 10.0,
             "cadFile": "",
