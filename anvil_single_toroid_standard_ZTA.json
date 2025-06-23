@@ -1,0 +1,11 @@
+{
+  "type": "polycrystalline",
+  "material": "ZTA",
+  "culetGeometry": "single toroid",
+  "culetDiameter": 15.55,
+  "model": "standard",
+  "cadFile": "",
+  "manufacturer": "",
+  "comment": "",
+  "UB": []
+}

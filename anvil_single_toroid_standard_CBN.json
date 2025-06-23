@@ -1,0 +1,11 @@
+{
+  "type": "polycrystalline",
+  "material": "CBN",
+  "culetGeometry": "single toroid",
+  "culetDiameter": 10.0,
+  "model": "standard",
+  "cadFile": "",
+  "manufacturer": "",
+  "comment": "test comment",
+  "UB": []
+}

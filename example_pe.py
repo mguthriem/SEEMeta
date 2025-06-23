@@ -43,3 +43,5 @@ print("\nand then converted to this giant string:\n")
 outputString = toString(reloaded) 
 print("output is of type: ",type(outputString)," with value: ")
 print(outputString)
+
+PE001.makeFileName()
