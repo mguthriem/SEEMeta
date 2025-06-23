@@ -1,0 +1,43 @@
+{
+  "type": "paris-edinburgh",
+  "model": "VX5",
+  "material": "N/A",
+  "anvils": [
+    {
+      "type": "polycrystalline",
+      "material": "ZTA",
+      "culetGeometry": "single toroid",
+      "culetDiameter": 15.55,
+      "model": "standard",
+      "cadFile": "anvil_single_toroid_standard_ZTA.cad",
+      "manufacturer": "",
+      "stringDescriptor": "anvil_single_toroid_standard_ZTA",
+      "comment": "",
+      "UB": []
+    },
+    {
+      "type": "polycrystalline",
+      "material": "ZTA",
+      "culetGeometry": "single toroid",
+      "culetDiameter": 15.55,
+      "model": "standard",
+      "cadFile": "anvil_single_toroid_standard_ZTA.cad",
+      "manufacturer": "",
+      "stringDescriptor": "anvil_single_toroid_standard_ZTA",
+      "comment": "",
+      "UB": []
+    }
+  ],
+  "gasketMaterial": "TiZr",
+  "gasketType": "encapsulating",
+  "loadAxis": [
+    0,
+    1,
+    0
+  ],
+  "temperatureControl": "None",
+  "cadFile": "PE_VX5_ZTA_single_toroid.cad",
+  "stringDescriptor": "PE_VX5_ZTA_single_toroid",
+  "manufacturer": "",
+  "comment": ""
+}

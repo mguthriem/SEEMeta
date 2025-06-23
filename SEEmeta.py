@@ -40,6 +40,7 @@ class anvil:
             "model": self.model,
             "cadFile": self.cadFile,
             "manufacturer": self.manufacturer,
+            "stringDescriptor": self.stringDescriptor,
             "comment": self.comment,
             "UB": self.UB
         }
@@ -63,7 +64,8 @@ class anvil:
             type=data["type"],
             material=data["material"],
             culetGeometry=data["culetGeometry"],
-            culetDiameter=data["culetDiameter"]
+            culetDiameter=data["culetDiameter"],
+            model=data["model"]
         )
         obj.cadFile = data.get("cadFile", "") 
         obj.manufacturer = data.get("manufacturer", "")
@@ -89,7 +91,6 @@ class opposedAnvilCell:
 
         # optional info
         self.temperatureControl = None
-        self.cadFile = ""
         self.manufacturer = ""
         self.comment = ""
 
@@ -116,7 +117,8 @@ class opposedAnvilCell:
                                        "SS301", 
                                        "pyrophyllite","Al",
                                        "CuBe"]
-        assert self.gasketType in ["encapsulating","non_encapsulating","flat"]
+        print(f"gasket type is {self.gasketType}")
+        assert self.gasketType in ["encapsulating","non_encapsulating","flat","other"]
 
     def to_dict(self):
         return {
@@ -129,6 +131,7 @@ class opposedAnvilCell:
             "loadAxis": self.loadAxis,
             "temperatureControl": self.temperatureControl,
             "cadFile": self.cadFile,
+            "stringDescriptor": self.stringDescriptor,
             "manufacturer": self.manufacturer,
             "comment": self.comment
         }
@@ -157,10 +160,12 @@ class opposedAnvilCell:
         anvil = self.anvils[0] # this assumes anvils are the same
 
         if self.type == "paris-edinburgh":
-            
-            stringDescriptor = f"PE_{anvil.material}_culet_{self.culetDiameter}"
-        elif self.type == "polycrystalline":
-            stringDescriptor = f"DAC_{self.model}_culet_{anvil.culetDiameter}_gasket_{anvil.materiali}"
+
+            stringDescriptor = f"PE_{self.model}_{anvil.material}_{anvil.culetGeometry}"
+        elif self.type == "DAC":
+            stringDescriptor = f"DAC_{self.model}_{anvil.culetDiameter}mm_culet_{self.gasketMaterial}_gasket"
+        else:
+            raise ValueError(f"Unsupported type: {self.type}")
 
         return stringDescriptor.replace(" ","_")
 

@@ -1,0 +1,43 @@
+{
+  "type": "DAC",
+  "model": "MARK-VII",
+  "material": "N/A",
+  "anvils": [
+    {
+      "type": "single-crystal",
+      "material": "diamond",
+      "culetGeometry": "flat",
+      "culetDiameter": 1.0,
+      "model": "conical",
+      "cadFile": "anvil_SXL_diamond_culet_1.0.cad",
+      "manufacturer": "",
+      "stringDescriptor": "anvil_SXL_diamond_culet_1.0",
+      "comment": "",
+      "UB": []
+    },
+    {
+      "type": "single-crystal",
+      "material": "diamond",
+      "culetGeometry": "flat",
+      "culetDiameter": 1.0,
+      "model": "conical",
+      "cadFile": "anvil_SXL_diamond_culet_1.0.cad",
+      "manufacturer": "",
+      "stringDescriptor": "anvil_SXL_diamond_culet_1.0",
+      "comment": "",
+      "UB": []
+    }
+  ],
+  "gasketMaterial": "Re",
+  "gasketType": "flat",
+  "loadAxis": [
+    0,
+    0,
+    1
+  ],
+  "temperatureControl": "None",
+  "cadFile": "DAC_MARK-VII_1.0mm_culet_Re_gasket.cad",
+  "stringDescriptor": "DAC_MARK-VII_1.0mm_culet_Re_gasket",
+  "manufacturer": "",
+  "comment": ""
+}
