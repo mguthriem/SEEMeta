@@ -217,6 +217,7 @@ def update_oac_fields(tval):
     temp_oac.options = temp_map[tval]
     temp_oac.value = "None"
 
+    
     anvil_dir = os.path.join(save_directory.value.strip(), "anvils")
     if os.path.isdir(anvil_dir):
         files = [f for f in os.listdir(anvil_dir) if f.startswith("anvil") and f.endswith(".json")]
@@ -227,7 +228,7 @@ def update_oac_fields(tval):
         anvil_file_oac.options = []
         anvil_file_oac.value = None
 
-    oac_files = [f for f in os.listdir(anvil_dir) if not f.startswith("anvil") and f.endswith(".json")]
+    oac_files = [f for f in os.listdir(save_directory.value.strip()) if f.endswith(".json")]
     oac_file_selector.options = ["Select a file..."] + oac_files
     oac_file_selector.value = "Select a file..."
 
