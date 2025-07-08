@@ -5,13 +5,28 @@ pn.extension()
 import os
 import json
 import traceback
-from SEEmeta import opposedAnvilCell,anvil
+from SEEmeta import material,opposedAnvilCell,anvil
+from sqlalchemy import create_engine
 
+# ===================== LOAD MATERIALS DATABASE ================
+# Connect to your DB
+engine = create_engine("sqlite:///materials/materials.db")
+# Load all materials into a list
+materials = material.load_all(engine)
 # ===================== ANVIL BUILDER ==========================
+
+# assign materials
+zta = material(engine,name="zta")
+wc = material(engine,name="wc")
+sinteredDiamond = material(engine,name="sintereddiamond")
+sxldiamond = material(engine,name="singlecrystaldiamond")
+cbn = material(engine,name="cbn")
+
+
 type_options = ["polycrystalline", "single-crystal"]
 material_map = {
-    "polycrystalline": ["ZTA", "WC", "sintered diamond", "CBN"],
-    "single-crystal": ["diamond"]
+    "polycrystalline": [zta.name, wc.name, sinteredDiamond.name, cbn.name],
+    "single-crystal": [sxldiamond.name]
 }
 geometry_map = {
     "polycrystalline": ["single toroid", "double toroid", "bridgman"],
@@ -165,13 +180,22 @@ anvil_tab = pn.Column(
 # ===================== OPPOSED ANVIL CELL BUILDER ==========================
 oac_type = pn.widgets.Select(name="Type", options=["paris-edinburgh", "DAC"], value="paris-edinburgh")
 
+# assign materials
+
+tizr = material(engine,name="tizr")
+zr = material(engine,name="zr")
+pyrophyllite = material(engine,name="pyrophillite")
+re = material(engine,name="re")
+ss301 = material(engine,name="ss301")
+w = material(engine,name="w")
+
 model_map_oac = {
     "paris-edinburgh": ["VX1", "VX3", "VX5"],
     "DAC": ["LEGACY", "MARK-VI", "MARK-VII"]
 }
 gasket_map = {
-    "paris-edinburgh": ["TiZr", "pyrophyllite", "Zr"],
-    "DAC": ["Re", "SS301", "W"]
+    "paris-edinburgh": [tizr.name, pyrophyllite.name, zr.name],
+    "DAC": [re.name, ss301.name, w.name]
 }
 gtype_map = {
     "paris-edinburgh": ["encapsulating", "non-encapsulating", "other"],
