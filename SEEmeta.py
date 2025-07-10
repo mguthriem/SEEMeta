@@ -228,7 +228,7 @@ class opposedAnvilCell:
                                        "SS301", 
                                        "pyrophyllite","Al",
                                        "CuBe"]
-        print(f"gasket type is {self.gasketType}")
+        # print(f"gasket type is {self.gasketType}")
         assert self.gasketType in ["encapsulating","non_encapsulating","flat","other"]
 
     def to_dict(self):
