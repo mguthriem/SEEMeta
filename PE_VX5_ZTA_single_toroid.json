@@ -35,7 +35,7 @@
     1,
     0
   ],
-  "temperatureControl": "None",
+  "temperatureControl": "CCR-25",
   "cadFile": "PE_VX5_ZTA_single_toroid.cad",
   "stringDescriptor": "PE_VX5_ZTA_single_toroid",
   "manufacturer": "",
